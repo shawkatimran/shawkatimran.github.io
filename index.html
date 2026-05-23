@@ -493,9 +493,9 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            padding: 5px;
+            padding: 4px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 0 35px rgba(0, 212, 212, 0.25);
+            box-shadow: 0 0 50px rgba(0, 212, 212, 0.35), 0 0 100px rgba(0, 212, 212, 0.12);
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -503,21 +503,51 @@
             position: relative;
             z-index: 2;
             cursor: pointer;
-            /* Floating Keyframes linked */
             animation: float 3.5s ease-in-out infinite, pulse-glow 3.5s ease-in-out infinite;
+        }
+
+        /* Inner circle that holds the actual photo with dark bg */
+        .profile-image-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 35%, #0d1f3c 0%, #060a12 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dark vignette overlay at bottom to feather the white bg into dark */
+        .profile-image-inner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, #060a12 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+            border-radius: 0 0 50% 50%;
         }
 
         .profile-image-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center 5%;
             border-radius: 50%;
-            background-color: var(--bg-color);
             transition: var(--transition-smooth);
+            display: block;
         }
 
         .profile-image-container:hover img {
-            transform: scale(1.05);
+            transform: scale(1.06);
+        }
+        .profile-image-inner {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* ABOUT SECTION & STATS */
@@ -1060,8 +1090,8 @@
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
         }
 
         .skills-category {
@@ -1644,7 +1674,7 @@
                 grid-template-columns: 1fr;
             }
             .skills-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
             .strengths-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1760,7 +1790,7 @@
                     </div>
 
                     <div class="hero-ctas">
-                        <a href="Resume_SQA_Shawkat_Imran_6YOE.pdf" download="Resume_SQA_Shawkat_Imran_6YOE.pdf" class="btn btn-primary">
+                        <a href="https://drive.google.com/uc?export=download&id=1bntnyeRJvahBxz8MUsMjEVEf9YshxgaA" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                             <i data-lucide="download"></i>
                             Download Resume
                         </a>
@@ -1778,8 +1808,10 @@
                         <div class="tech-ring tech-ring-2"></div>
                         <!-- Profile Image Frame -->
                         <div class="profile-image-container">
-                            <!-- Premium SVG Silhouette with Neural Grid Embedded -->
-                            <img id="profile-photo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' width='400' height='400'><rect width='100%' height='100%' fill='%230a0e1a'/><defs><radialGradient id='g' cx='50%' cy='50%' r='50%' fx='50%' fy='50%'><stop offset='0%' stop-color='%2300d4d4' stop-opacity='0.25'/><stop offset='100%' stop-color='%237c3aed' stop-opacity='0'/></radialGradient></defs><circle cx='200' cy='200' r='180' fill='url(%23g)'/><path d='M200,100 C155.8,100 120,135.8 120,180 C120,209.6 136.1,235.4 160.2,249.2 C125.7,262.5 100,296.2 100,336 L116,336 C116,289.6 153.6,252 200,252 C246.4,252 284,289.6 284,336 L300,336 C300,296.2 274.3,262.5 239.8,249.2 C263.9,235.4 280,209.6 280,180 C280,135.8 244.2,100 200,100 Z M200,116 C235.4,116 264,144.6 264,180 C264,215.4 235.4,244 200,244 C164.6,244 136,215.4 136,180 C136,144.6 164.6,116 200,116 Z' fill='%2300d4d4' opacity='0.7'/><circle cx='200' cy='180' r='5' fill='%237c3aed'/><line x1='200' y1='100' x2='200' y2='60' stroke='%2300d4d4' stroke-width='1.5' stroke-dasharray='3 3'/><line x1='120' y1='180' x2='80' y2='180' stroke='%2300d4d4' stroke-width='1.5' stroke-dasharray='3 3'/><line x1='280' y1='180' x2='320' y2='180' stroke='%2300d4d4' stroke-width='1.5' stroke-dasharray='3 3'/><circle cx='200' cy='60' r='3' fill='%2300d4d4'/><circle cx='80' cy='180' r='3' fill='%2300d4d4'/><circle cx='320' cy='180' r='3' fill='%2300d4d4'/></svg>" alt="Shawkat Imran">
+                            <div class="profile-image-inner">
+                            <!-- Embedded base64 profile photo -->
+                            <img id="profile-photo" src="https://drive.google.com/thumbnail?id=1bntnyeRJvahBxz8MUsMjEVEf9YshxgaA&sz=w400" alt="Rumi - passport photo" loading="lazy" width="400" height="400">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2271,20 +2303,37 @@
             </div>
 
             <div class="skills-grid">
-                <!-- Automation -->
+                <!-- Automation & UI Testing -->
                 <div class="skills-category reveal-element">
                     <h3 class="skills-category-title">
                         <i data-lucide="play-circle"></i>
-                        Automation & Testing
+                        Automation &amp; UI Testing
                     </h3>
                     <div class="skills-pills">
                         <span class="skill-tag">Selenium</span>
                         <span class="skill-tag">Playwright</span>
+                        <span class="skill-tag">Black-Box Testing</span>
+                        <span class="skill-tag">End-to-End Testing</span>
+                        <span class="skill-tag">Regression Testing</span>
+                        <span class="skill-tag">Sanity &amp; Smoke Testing</span>
+                        <span class="skill-tag">Functional Testing</span>
+                    </div>
+                </div>
+
+                <!-- API & Performance Testing -->
+                <div class="skills-category reveal-element">
+                    <h3 class="skills-category-title">
+                        <i data-lucide="activity"></i>
+                        API &amp; Performance Testing
+                    </h3>
+                    <div class="skills-pills">
                         <span class="skill-tag">Postman</span>
                         <span class="skill-tag">Newman</span>
-                        <span class="skill-tag">Black-Box Testing</span>
+                        <span class="skill-tag">JMeter</span>
                         <span class="skill-tag">API Integration Testing</span>
-                        <span class="skill-tag">Regression Pipelines</span>
+                        <span class="skill-tag">Load Testing</span>
+                        <span class="skill-tag">Stress Testing</span>
+                        <span class="skill-tag">JSON Schema Validation</span>
                     </div>
                 </div>
 
@@ -2292,16 +2341,16 @@
                 <div class="skills-category reveal-element">
                     <h3 class="skills-category-title">
                         <i data-lucide="database"></i>
-                        Languages & Databases
+                        Languages &amp; Databases
                     </h3>
                     <div class="skills-pills">
-                        <span class="skill-tag">C Language</span>
-                        <span class="skill-tag">Python</span>
                         <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C Language</span>
                         <span class="skill-tag">MSSQL</span>
                         <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">SQL Queries</span>
-                        <span class="skill-tag">JSON Schema</span>
+                        <span class="skill-tag">Complex SQL Queries</span>
+                        <span class="skill-tag">Data Integrity Validation</span>
                     </div>
                 </div>
 
@@ -2309,16 +2358,16 @@
                 <div class="skills-category reveal-element">
                     <h3 class="skills-category-title">
                         <i data-lucide="bug"></i>
-                        Bug Tracking & QA Lifecycle
+                        Bug Tracking &amp; QA Lifecycle
                     </h3>
                     <div class="skills-pills">
                         <span class="skill-tag">Jira</span>
                         <span class="skill-tag">Bugzilla</span>
                         <span class="skill-tag">Zoho Projects</span>
                         <span class="skill-tag">GitLab Issues</span>
+                        <span class="skill-tag">Test Plan &amp; Strategy</span>
                         <span class="skill-tag">Test Case Design</span>
-                        <span class="skill-tag">QA Auditing</span>
-                        <span class="skill-tag">Defect Tracking</span>
+                        <span class="skill-tag">Defect Lifecycle Management</span>
                     </div>
                 </div>
 
@@ -2326,16 +2375,33 @@
                 <div class="skills-category reveal-element">
                     <h3 class="skills-category-title">
                         <i data-lucide="cpu"></i>
-                        CI/CD, Infrastructure & AI
+                        CI/CD, Infrastructure &amp; AI
                     </h3>
                     <div class="skills-pills">
-                        <span class="skill-tag">Git Version Control</span>
+                        <span class="skill-tag">Git &amp; GitHub</span>
                         <span class="skill-tag">GitHub Actions</span>
-                        <span class="skill-tag">Docker Containers</span>
+                        <span class="skill-tag">Docker</span>
                         <span class="skill-tag">Claude AI API</span>
-                        <span class="skill-tag">Generative AI Testing</span>
+                        <span class="skill-tag">AI-Augmented Testing</span>
                         <span class="skill-tag">MS Report Builder</span>
                         <span class="skill-tag">MS Excel Advanced</span>
+                    </div>
+                </div>
+
+                <!-- QA Process & Leadership -->
+                <div class="skills-category reveal-element">
+                    <h3 class="skills-category-title">
+                        <i data-lucide="shield-check"></i>
+                        QA Process &amp; Leadership
+                    </h3>
+                    <div class="skills-pills">
+                        <span class="skill-tag">Agile / Scrum</span>
+                        <span class="skill-tag">Sprint Planning</span>
+                        <span class="skill-tag">Requirements Analysis</span>
+                        <span class="skill-tag">QA Lead &amp; Mentoring</span>
+                        <span class="skill-tag">Gap Analysis</span>
+                        <span class="skill-tag">QA Documentation</span>
+                        <span class="skill-tag">Acceptance Criteria</span>
                     </div>
                 </div>
             </div>
