@@ -142,13 +142,22 @@
         /* SCROLL REVEAL STYLES */
         .reveal-element {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(24px);
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .reveal-element.active {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Safety fallback - nothing stays hidden forever */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-element {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
         }
 
         /* SHINY BUTTONS */
@@ -1753,7 +1762,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="hero">
+    <section id="hero" style="opacity:1;transform:none;">
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-left">
@@ -2735,6 +2744,9 @@
             setTimeout(typeEffect, 1000);
         });
 
+        // Auto-activate hero section immediately
+        document.getElementById('hero').classList.add('active');
+
         // 4. HIGH-PERFORMANCE INTERSECTION OBSERVER FOR COUNTERS
         const statsSection = document.getElementById('about');
         const statNumbers = document.querySelectorAll('.stat-number');
@@ -2798,26 +2810,25 @@
                     });
                 }
             });
-        }, { threshold: 0.2, rootMargin: "-50px 0px -50px 0px" });
+        }, { threshold: 0.05, rootMargin: "0px 0px -60px 0px" });
 
+        // Only observe — do NOT re-add reveal-element (already in HTML)
         sections.forEach(section => {
-            section.classList.add('reveal-element');
             scrollObserver.observe(section);
         });
 
-        // Also observe individual timeline elements for clean sequential entries
-        const timelineItems = document.querySelectorAll('.timeline-item');
-        const timelineObserver = new IntersectionObserver((entries) => {
+        // Also observe individual reveal-element cards/items
+        const revealItems = document.querySelectorAll('.reveal-element:not(section)');
+        const itemObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.05, rootMargin: "0px 0px -40px 0px" });
 
-        timelineItems.forEach(item => {
-            item.classList.add('reveal-element');
-            timelineObserver.observe(item);
+        revealItems.forEach(item => {
+            itemObserver.observe(item);
         });
 
         // 6. DYNAMIC CIRCUIT NEURAL CANVAS BACKGROUND
@@ -2989,6 +3000,14 @@
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email.toLowerCase());
         }
+
+        // SAFETY NET: force-activate all reveal elements after 2.5s
+        // in case IntersectionObserver misses anything
+        setTimeout(() => {
+            document.querySelectorAll('.reveal-element').forEach(el => {
+                el.classList.add('active');
+            });
+        }, 2500);
     </script>
 </body>
 </html>
